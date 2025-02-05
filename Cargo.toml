@@ -1,0 +1,21 @@
+[package]
+name = "chamox"
+version = "0.1.1"
+edition = "2021"
+description = "A Rust procedural macro to inject obfuscated, meaningless code to increase reverse engineering complexity."
+license = "MIT OR Apache-2.0"
+authors = ["yinheli <me@yinheli.com>"]
+repository = "https://github.com/yinheli/chamox"
+homepage = "https://github.com/yinheli/chamox"
+keywords = ["rust", "macro", "obfuscation", "security", "reverse-engineering"]
+categories = ["development-tools", "compilers", "cryptography"]
+readme = "README.md"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = { version = "2", features = ["full"] }
+quote = "1"
+proc-macro2 = "1.0"
+rand = "0.9"

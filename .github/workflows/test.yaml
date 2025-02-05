@@ -1,0 +1,61 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+ 
+  pull_request:
+    branches:
+      - master
+      - develop
+  
+  workflow_dispatch:
+
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_NET_RETRY: 10
+  RUSTUP_MAX_RETRIES: 10
+
+jobs:
+  test:
+    name: test
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+
+          - target: x86_64-unknown-linux-musl
+            os: ubuntu-latest
+
+          - target: aarch64-unknown-linux-gnu
+            os: ubuntu-latest
+
+          - target: aarch64-unknown-linux-musl
+            os: ubuntu-latest
+
+          - target: x86_64-apple-darwin
+            os: macos-latest
+
+          - target: aarch64-apple-darwin
+            os: macos-latest
+
+    runs-on: ${{ matrix.os }}
+    continue-on-error: true
+    steps:
+      - name: Setup | Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup | Rust
+        uses: dtolnay/rust-toolchain@nightly
+        with:
+          target: ${{ matrix.target }}
+
+      - name: Check | Cargo
+        run: cargo check --release --locked --target ${{ matrix.target }}
+
+      - name: Test
+        run: cargo test --benches -- --nocapture
