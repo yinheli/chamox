@@ -1,6 +1,16 @@
 use chamox::obfuscate;
 
 #[test]
+fn test_void() {
+    #[obfuscate]
+    fn void_test() {
+        println!("Hello, world!");
+    }
+
+    assert_eq!(void_test(), ());
+}
+
+#[test]
 fn test_string() {
     #[obfuscate]
     fn string_test() -> String {
@@ -72,4 +82,26 @@ fn test_with_loop() {
 
     assert_eq!(sum_up_to(5), 15);
     assert_eq!(sum_up_to(10), 55);
+}
+
+#[test]
+fn test_with_function_pointer() {
+    #[obfuscate]
+    fn add(a: i32, b: i32) -> i32 {
+        a + b
+    }
+
+    let add_ptr = add as fn(i32, i32) -> i32;
+    assert_eq!(add_ptr(2, 3), 5);
+}
+
+#[test]
+fn test_with_attributes() {
+    #[obfuscate]
+    #[inline]
+    fn add(a: i32, b: i32) -> i32 {
+        a + b
+    }
+
+    assert_eq!(add(2, 3), 5);
 }
