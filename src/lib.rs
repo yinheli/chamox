@@ -1,9 +1,44 @@
+//! A procedural macro for injecting obfuscated code to increase reverse engineering complexity.
+//!
+//! # Usage
+//!
+//! ```rust
+//! use chamox::obfuscate;
+//!
+//! #[obfuscate]
+//! fn my_function() {
+//!     println!("Hello world!");
+//! }
+//! ```
+//!
+//! The macro will inject random meaningless code between your function statements to:
+//! - Make the binary harder to analyze
+//! - Increase reverse engineering complexity
+//! - Preserve the original function behavior
+//!
+//! The injected code includes random operations on:
+//! - Numbers (arithmetic operations)
+//! - Booleans (logical operations)
+//! - Strings (string manipulations)
+
 extern crate proc_macro;
 use proc_macro::TokenStream;
 use quote::quote;
 use rand::Rng;
 use syn::{parse_macro_input, ItemFn};
 
+/// A procedural macro for injecting obfuscated code to increase reverse engineering complexity.
+///
+/// # Usage
+///
+/// ```rust
+/// use chamox::obfuscate;
+///
+/// #[obfuscate]
+/// fn my_function() {
+///     println!("Hello world!");
+/// }
+/// ```
 #[proc_macro_attribute]
 pub fn obfuscate(_: TokenStream, input: TokenStream) -> TokenStream {
     let func = parse_macro_input!(input as ItemFn);

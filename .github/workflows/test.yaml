@@ -5,12 +5,12 @@ on:
     branches:
       - master
       - develop
- 
+
   pull_request:
     branches:
       - master
       - develop
-  
+
   workflow_dispatch:
 
 env:
@@ -55,7 +55,7 @@ jobs:
           target: ${{ matrix.target }}
 
       - name: Check | Cargo
-        run: cargo check --release --locked --target ${{ matrix.target }}
+        run: cargo check --release --target ${{ matrix.target }}
 
       - name: Test
         run: cargo test --benches -- --nocapture
