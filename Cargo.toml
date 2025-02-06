@@ -1,6 +1,6 @@
 [package]
 name = "chamox"
-version = "0.1.3"
+version = "0.1.4"
 edition = "2021"
 description = "A Rust procedural macro to inject obfuscated, meaningless code to increase reverse engineering complexity."
 license = "MIT OR Apache-2.0"
